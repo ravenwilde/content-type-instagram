@@ -11,34 +11,54 @@ License: GPLv2
 
 
 /* Instagram Custom Post Type */
-function create_instagram_post_type() {    
 
-    register_post_type( 'instagram_post',
-        array(
-            'labels' => array(
-                'name' => 'Instagram',
-                'singular_name' => 'Instagram',
-                'add_new' => 'Add New',
-                'add_new_item' => 'Add New Instagram',
-                'edit' => 'Edit',
-                'edit_item' => 'Edit Instagram',
-                'new_item' => 'New Instagram',
-                'view' => 'View',
-                'view_item' => 'View Instagram',
-                'search_items' => 'Search Instagrams',
-                'not_found' => 'No Instagrams found',
-                'not_found_in_trash' => 'No Instagrams found in Trash',
-                'parent' => 'Parent Instagrams'
-            ),
- 
-            'public' => true,
-            'menu_position' => 15,
-            'supports' => array( 'title', 'editor', 'revisions' ),
-            'has_archive' => true
-            'rewrite' => array('slug' => 'instagram'),
-        )
+function register_post_type() {
+
+    $labels = array(
+        'name'                => _x( 'Instagrams', 'Post Type General Name', 'text_domain' ),
+        'singular_name'       => _x( 'Instagram', 'Post Type Singular Name', 'text_domain' ),
+        'menu_name'           => __( 'Instagram', 'text_domain' ),
+        'parent_item_colon'   => __( 'Parent Instagrams:', 'text_domain' ),
+        'all_items'           => __( 'All Instagrams', 'text_domain' ),
+        'view_item'           => __( 'View Instagram', 'text_domain' ),
+        'add_new_item'        => __( 'Add New Instagram', 'text_domain' ),
+        'add_new'             => __( 'Add New', 'text_domain' ),
+        'edit_item'           => __( 'Edit Instagram', 'text_domain' ),
+        'update_item'         => __( 'Update Instagram', 'text_domain' ),
+        'search_items'        => __( 'Search Instagram', 'text_domain' ),
+        'not_found'           => __( 'No Instagrams Found', 'text_domain' ),
+        'not_found_in_trash'  => __( 'No Instagrams found in Trash', 'text_domain' ),
     );
+    $rewrite = array(
+        'slug'                => 'instagram',
+        'with_front'          => true,
+        'pages'               => true,
+        'feeds'               => true,
+    );
+    $args = array(
+        'label'               => __( 'instagram_post', 'text_domain' ),
+        'description'         => __( 'Instagram Imports', 'text_domain' ),
+        'labels'              => $labels,
+        'supports'            => array( 'title', 'editor', 'author', 'thumbnail', 'revisions', ),
+        'taxonomies'          => array( 'category', 'post_tag' ),
+        'hierarchical'        => false,
+        'public'              => true,
+        'show_ui'             => true,
+        'show_in_menu'        => true,
+        'show_in_nav_menus'   => true,
+        'show_in_admin_bar'   => true,
+        'menu_position'       => 5,
+        'can_export'          => true,
+        'has_archive'         => true,
+        'exclude_from_search' => false,
+        'publicly_queryable'  => true,
+        'rewrite'             => $rewrite,
+        'capability_type'     => 'page',
+    );
+    register_post_type( 'instagram_post', $args );
+
 }
+
 
 /* Load Custom CSS */
 function register_instagram_styles()  
@@ -49,7 +69,7 @@ function register_instagram_styles()
 }  
   
 /* Make everything happen */
-add_action( 'init', 'create_instagram_post_type' );
+add_action( 'init', 'register_post_type', 0 );
 add_action( 'wp_enqueue_scripts', 'register_instagram_styles' );
 
 
