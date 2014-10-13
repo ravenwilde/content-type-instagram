@@ -1,47 +1,19 @@
 <?php
 /*
-Plugin Name: Content-Instagram
+Plugin Name: Aqua-Instagram
 Plugin URI: https://github.com/ravenwilde/content-instagram
-Description: A plugin that creates a custom post type for instagram imports.
+Description: A plugin that creates a custom post type for instagram imports - designed for use with my 'Aqua-One' Theme but can be used with any WordPress theme..
 Version: 1.0
 Author: Jennifer Scroggins
 Author URI: http://www.ravenwilde.com/
 License: GPLv2
 */
 
-/* Create Instagram Taxonomy */
-
-function register_instagram_taxonomy() {
-    register_taxonomy(
-        'instagram',
-        array( 'instagram'),
-        array(
-            'public' => true,
-            'labels' => array(
-                'name' => __( 'Instagram' ),
-                'singular_name' => __( 'Instagram' ),
-                'search_items' => __( 'Instagrams' ),
-                'popular_items' => __( 'Popular Instagrams' ),
-                'all_items' => __( 'All Instagrams' ),
-                'edit_item' => __( 'Edit Instagram' ),
-                'update_item' => __( 'Update Instagram' ),
-                'add_new_item' => __( 'Add Instagram' ),
-                'new_item_name' => __( 'New Instagram Name' ),
-                ),
-            'show_ui'           => true,
-            'show_in_nav_menus' => true,
-            'show_admin_column' => true,
-            'hierarchical' => false,
-            'query_var' => 'instagram',
-            )
-
-        );
-}
 
 /* Instagram Custom Post Type */
-function create_instagram_post_types() {    
+function create_instagram_post_type() {    
 
-    register_post_type( 'instagram',
+    register_post_type( 'instagram_post',
         array(
             'labels' => array(
                 'name' => 'Instagram',
@@ -62,8 +34,8 @@ function create_instagram_post_types() {
             'public' => true,
             'menu_position' => 15,
             'supports' => array( 'title', 'editor', 'revisions' ),
-            'taxonomies' => array( 'instagram' ),
             'has_archive' => true
+            'rewrite' => array('slug' => 'instagram'),
         )
     );
 }
@@ -77,8 +49,7 @@ function register_instagram_styles()
 }  
   
 /* Make everything happen */
-add_action( 'init', 'register_instagram_taxonomy', 0 );
-add_action( 'init', 'create_instagram_post_types' );
+add_action( 'init', 'create_instagram_post_type' );
 add_action( 'wp_enqueue_scripts', 'register_instagram_styles' );
 
 
