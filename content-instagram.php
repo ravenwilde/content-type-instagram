@@ -88,6 +88,7 @@ function include_template_function( $template_path ) {
             if ( $theme_file = locate_template( array ( 'single-instagram_post.php' ) ) ) {
                 $template_path = $theme_file;
             } else {
+                //echo "WORKED";
                 $template_path = plugin_dir_path( __FILE__ ) . '/single-instagram_post.php';
             }
         }

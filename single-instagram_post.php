@@ -11,7 +11,14 @@ get_header(); ?>
 
 			<?php get_template_part( 'content', 'single' ); ?>
 
-			<?php aqua_one_post_nav(); ?>
+			<nav class="navigation post-navigation" role="navigation">
+				<div class="nav-links">
+					<?php
+						previous_post_link( '<div class="nav-previous">%link</div>', _x( '<span class="meta-nav">&larr;</span>&nbsp;%title', 'Previous post link' ) );
+						next_post_link(     '<div class="nav-next">%link</div>',     _x( '%title&nbsp;<span class="meta-nav">&rarr;</span>', 'Next post link' ) );
+					?>
+				</div><!-- .nav-links -->
+			</nav><!-- .navigation -->
 
 			<?php
 				// If comments are open or we have at least one comment, load up the comment template
